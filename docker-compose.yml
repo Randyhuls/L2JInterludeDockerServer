@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+    mariadb:
+        container_name: l2j-interlude-db
+        image: yobasystems/alpine-mariadb:latest
+        volumes:
+            - /var/lib/mysql
+        restart: always
+        environment: 
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        ports:
+            - "3306:3306"
+    l2jserver:
+        container_name: l2j-interlude-server
+        image: rcbhuls/l2j-interlude-server:v1.0.10
+        restart: always
+        build: .
+        environment:
+            IP_ADDRESS: "${GAMESERVER_ADDRESS}"
+            LOGIN_HOST: "127.0.0.1"
+            GAME_SERVER_HOST: "127.0.0.1"
+            SERVER_DEBUG: "False"
+            AUTO_CREATE_ACCOUNTS: "True"
+            MAX_ONLINE_USERS: "300"
+            RATE_XP: "1"
+            RATE_SP: "1"
+            RATE_PARTY_XP: "1"
+            RATE_PARTY_SP: "1"
+            RATE_DROP_ADENA: "1"
+            RATE_DROP_QUEST: "1"
+            RATE_QUESTS_REWARD: "1"
+            RATE_KARMA_EXP_LOST: "1"
+            PLAYER_DROP_LIMIT: "0"
+            PLAYER_RATE_DROP: "0"
+            PLAYER_RATE_DROP_ITEM: "0"
+            PLAYER_RATE_DROP_EQUIP: "0"
+            PLAYER_RATE_DROP_EQUIP_WEAPON: "0"
+            MINIMUM_PKS_BEFORE_DROP: "1"
+            PET_XP_RATE: "1"
+            PET_FOOD_RATE: "1"
+        depends_on: 
+            - mariadb
+        ports:
+            - "2106:2106"
+            - "7777:7777"
+        tty: true
+
