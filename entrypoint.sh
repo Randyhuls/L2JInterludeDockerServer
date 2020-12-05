@@ -5,8 +5,6 @@
 # L2J Server is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 # You should have received a copy of the GNU General Public License along with this program. If not, see http://www.gnu.org/licenses/.
 
-LOGIN_HOST=${LOGIN_HOST:-"127.0.0.1"}
-GAME_SERVER_HOST=${GAME_SERVER_HOST:-"127.0.0.1"}
 DATABASE_USER=${DATABASE_USER:-"root"}
 DATABASE_PASS=${DATABASE_PASS:-"root"}
 DATABASE_ADDRESS=${DATABASE_ADDRESS:-"mariadb"}
@@ -131,13 +129,6 @@ sed -i "s#jdbc:mariadb://localhost/l2jdb#jdbc:mariadb://mariadb:3306/l2jdb#g" /o
 sed -i "s#jdbc:mariadb://localhost/l2jdb#jdbc:mariadb://mariadb:3306/l2jdb#g" /opt/l2j/server/game/config/server.properties
 
 # ---------------------------------------------------------------------------
-# Networking
-# ---------------------------------------------------------------------------
-
-sed -i "s#LoginHost = 127.0.0.1#LoginHost = $LOGIN_HOST#g" /opt/l2j/server/game/config/server.properties
-sed -i "s#GameServerHost = 127.0.0.1#GameServerHost = $GAME_SERVER_HOST#g" /opt/l2j/server/login/config/server.properties
-
-# ---------------------------------------------------------------------------
 # Login and Gameserver start
 # ---------------------------------------------------------------------------
 
@@ -145,16 +136,10 @@ echo "Starting login server"
 
 cd /opt/l2j/server/login/
 bash ./startLoginServer.sh
+tail -f log/stdout.log
 
 echo "Starting game server"
 
 cd /opt/l2j/server/game/
 bash ./startGameServer.sh
-
-#Temp
-echo "Waiting for the server log"
-
-sleep 5s
-
-tail -f /opt/l2j/server/login/log/stdout.log
-tail -f /opt/l2j/server/game/log/stdout.log
+tail -f log/stdout.log

@@ -15,10 +15,8 @@ services:
         container_name: l2j-interlude-server
         image: rcbhuls/l2j-interlude-server:v1.0.10
         restart: always
-        build: .
+        #build: .
         environment:
-            LOGIN_HOST: "0.0.0.0"
-            GAME_SERVER_HOST: "0.0.0.0"
             SERVER_DEBUG: "False"
             AUTO_CREATE_ACCOUNTS: "True"
             MAX_ONLINE_USERS: "300"
