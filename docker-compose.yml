@@ -17,9 +17,8 @@ services:
         restart: always
         build: .
         environment:
-            IP_ADDRESS: "${GAMESERVER_ADDRESS}"
-            LOGIN_HOST: "127.0.0.1"
-            GAME_SERVER_HOST: "127.0.0.1"
+            LOGIN_HOST: "0.0.0.0"
+            GAME_SERVER_HOST: "0.0.0.0"
             SERVER_DEBUG: "False"
             AUTO_CREATE_ACCOUNTS: "True"
             MAX_ONLINE_USERS: "300"
